@@ -26,7 +26,8 @@ class DoughHydration extends React.Component {
       flourType: 'DovesWhiteBread',
       hydration: 67,
       watermass: 61,
-      flourmass: 89
+      flourmass: 89,
+      starterflourmass: 0
     };
     this.updateHydrationRate();
 
@@ -57,6 +58,7 @@ class DoughHydration extends React.Component {
     var remainingMass = this.props.doughmass - this.props.startermass;
     thestate.watermass = Math.round(remainingMass * thestate.hydration / (100 + thestate.hydration));
     thestate.flourmass = remainingMass - thestate.watermass;
+    thestate.starterflourmass =  this.props.startermass-Math.round(this.props.startermass * thestate.hydration / (100 + thestate.hydration));
     this.setState(thestate);
 
 
@@ -91,7 +93,9 @@ class DoughHydration extends React.Component {
       <div>
         <h2>Quantities</h2>
 
-         <span>Mass of starter is {(this.props.startermass)} g</span>
+         <span>Mass of starter is {(Math.round(this.props.startermass))} g</span><br/>
+         <span>Mass of flour in starter is {(Math.round(this.state.starterflourmass))} g</span><br/>
+         <span>Mass of water in starter is {(Math.round(this.props.startermass-this.state.starterflourmass))} g</span>
         <h3>Remaining mass</h3>
 
 
@@ -100,10 +104,10 @@ class DoughHydration extends React.Component {
         </span><br />
         <span> Using Hydration  {(this.state.hydration)}
         </span><br />
-        <span> Mass to add to starter {(this.props.doughmass - this.props.startermass)}
+        <span> Mass to add to starter {(Math.round(this.props.doughmass - this.props.startermass))}
         </span><br />
         <h2>Made up of </h2>
-        <span> Flour Mass  {(this.state.flourmass)}
+        <span> Flour Mass  {(Math.round(this.state.flourmass))}
         </span><br />
         <span> Water Mass  {(this.state.watermass)}
         </span><br />

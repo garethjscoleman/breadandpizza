@@ -55,7 +55,7 @@ class DisplayQuantitiesTimesTab extends React.Component {
           break;
         case 4 :
           this.title = 'In Fridge, then Room';
-          this.time = [this.props.inroom,this.props.infridge];
+          this.time = [this.props.infridge,this.props.inroom];
           this.interfere = [this.props.fridgeplusroomstart,this.props.fridgeplusroomshape];
           this.location = [ 'fridge','room'];
           break;

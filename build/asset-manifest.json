@@ -1,16 +1,16 @@
 {
   "main.css": "/breadandpizza/build/static/css/main.53bb2b13.chunk.css",
-  "main.js": "/breadandpizza/build/static/js/main.65087ea2.chunk.js",
-  "main.js.map": "/breadandpizza/build/static/js/main.65087ea2.chunk.js.map",
+  "main.js": "/breadandpizza/build/static/js/main.96db702b.chunk.js",
+  "main.js.map": "/breadandpizza/build/static/js/main.96db702b.chunk.js.map",
   "static/css/1.1eb4b346.chunk.css": "/breadandpizza/build/static/css/1.1eb4b346.chunk.css",
   "static/js/1.275c0675.chunk.js": "/breadandpizza/build/static/js/1.275c0675.chunk.js",
   "static/js/1.275c0675.chunk.js.map": "/breadandpizza/build/static/js/1.275c0675.chunk.js.map",
   "runtime~main.js": "/breadandpizza/build/static/js/runtime~main.d21e8b80.js",
   "runtime~main.js.map": "/breadandpizza/build/static/js/runtime~main.d21e8b80.js.map",
-  "static/css/main.53bb2b13.chunk.css.map": "/breadandpizza/build/static/css/main.53bb2b13.chunk.css.map",
-  "static/media/logo.svg": "/breadandpizza/build/static/media/logo.5d5d9eef.svg",
   "static/css/1.1eb4b346.chunk.css.map": "/breadandpizza/build/static/css/1.1eb4b346.chunk.css.map",
+  "static/media/logo.svg": "/breadandpizza/build/static/media/logo.5d5d9eef.svg",
+  "static/css/main.53bb2b13.chunk.css.map": "/breadandpizza/build/static/css/main.53bb2b13.chunk.css.map",
   "index.html": "/breadandpizza/build/index.html",
-  "precache-manifest.6cb2daa7c6f3c50f8f110f37b7fcf03c.js": "/breadandpizza/build/precache-manifest.6cb2daa7c6f3c50f8f110f37b7fcf03c.js",
+  "precache-manifest.90927c4be32ccbe4b750aba36924d2f6.js": "/breadandpizza/build/precache-manifest.90927c4be32ccbe4b750aba36924d2f6.js",
   "service-worker.js": "/breadandpizza/build/service-worker.js"
 }

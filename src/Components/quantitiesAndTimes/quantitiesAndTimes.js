@@ -148,9 +148,9 @@ class QuantitiesAndTimes extends React.Component {
         doughProps.fridgestart =  (new Date(doughProps.desiredDateTime - doughProps.baketime - (2*doughProps.proofingtimes.infridge*(60*1000)))).toLocaleString();
         doughProps.fridgeshape =  (new Date(doughProps.desiredDateTime - doughProps.baketime -  (doughProps.proofingtimes.infridge*(60*1000)))).toLocaleString();
         doughProps.roomplusfridgestart =  (new Date(doughProps.desiredDateTime - doughProps.baketime - ((doughProps.proofingtimes.infridge+doughProps.proofingtimes.inroom)*(60*1000)))).toLocaleString();
-        doughProps.roomplusfridgeshape = (new Date(doughProps.desiredDateTime - doughProps.baketime -  (doughProps.proofingtimes.inroom*(60*1000)))).toLocaleString();
+        doughProps.roomplusfridgeshape = (new Date(doughProps.desiredDateTime - doughProps.baketime -  (doughProps.proofingtimes.infridge*(60*1000)))).toLocaleString();
         doughProps.fridgeplusroomstart = doughProps.roomplusfridgestart; 
-        doughProps.fridgeplusroomshape =  (new Date(doughProps.desiredDateTime - doughProps.baketime - (doughProps.proofingtimes.infridge*(60*1000)))).toLocaleString();
+        doughProps.fridgeplusroomshape =  (new Date(doughProps.desiredDateTime - doughProps.baketime - (doughProps.proofingtimes.inroom*(60*1000)))).toLocaleString();
 
 
       }
@@ -342,7 +342,7 @@ class QuantitiesAndTimes extends React.Component {
               <InputRange 
               formatMinLabel={value => ` Min ${value} g`}
               formatMaxLabel={value => ` Max ${value} g`}
-              step={1}
+              step={Math.round(this.state.doughmass/60)}
               maxValue={Math.round(this.state.doughmass/2)}
               minValue={0}
               value={this.state.startermass}
@@ -352,7 +352,7 @@ class QuantitiesAndTimes extends React.Component {
               <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
 
             <div>
-              <div onTouchStart={this.hideOrShow}   ><h4>
+              <div onTouchStart={this.hideOrShow}  ><h4>
           {this.state.show?<span> + Enter the desired time</span> : <span> - Close time entry</span> }
               </h4></div>
               <div className={(this.showClass)}>
