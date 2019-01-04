@@ -2,7 +2,7 @@
   "name": "breadandpizza",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://garethjscoleman.github.io/breadandpizza",
+  "homepage" : "http://garethjscoleman.github.io/breadandpizza/build",
   "dependencies": {
     "caniuse-lite": "^1.0.30000916",
     "react": "^16.6.1",
