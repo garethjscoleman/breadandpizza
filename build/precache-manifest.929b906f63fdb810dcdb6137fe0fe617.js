@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/breadandpizza/build/static/js/runtime~main.d21e8b80.js"
   },
   {
-    "revision": "a22677b64cb84c5050ed",
-    "url": "/breadandpizza/build/static/js/main.a22677b6.chunk.js"
+    "revision": "871c1977f48b71cb05c0",
+    "url": "/breadandpizza/build/static/js/main.871c1977.chunk.js"
   },
   {
-    "revision": "48924a4a06b41f460b42",
-    "url": "/breadandpizza/build/static/js/1.48924a4a.chunk.js"
+    "revision": "743cbf2f73b487c07116",
+    "url": "/breadandpizza/build/static/js/1.743cbf2f.chunk.js"
   },
   {
-    "revision": "a22677b64cb84c5050ed",
+    "revision": "871c1977f48b71cb05c0",
     "url": "/breadandpizza/build/static/css/main.9b5ec982.chunk.css"
   },
   {
-    "revision": "589023059997436d486176c628cb2f24",
+    "revision": "01c95ba4ff3865ce4eef67506be54902",
     "url": "/breadandpizza/build/index.html"
   }
 ];

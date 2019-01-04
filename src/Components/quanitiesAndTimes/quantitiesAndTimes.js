@@ -6,6 +6,7 @@ import { HelpBlock } from 'react-bootstrap';
 import { doughCalc } from './../../Services/doughCalc';
 import { pizzaMass } from './../../Services/doughCalc';
 import { bakeTime } from './../../Services/doughCalc';
+import  DoughHydration  from './../doughHydration/doughHydration';
 
 class QuantitiesAndTimes extends React.Component {
     constructor(props, context) {
@@ -56,7 +57,6 @@ class QuantitiesAndTimes extends React.Component {
       var theDate = new Date();
       theDate.setHours( theDate.getHours()+6);
       var doughProps = this.state;
-      debugger;
       doughProps = this.setDesiredStartTime(theDate, doughProps);
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
       this.setState(doughProps);
@@ -79,6 +79,12 @@ class QuantitiesAndTimes extends React.Component {
       } 
       if (mm < 10) {
         mm = '0' + mm;
+      } 
+      if (HH < 10) {
+        HH = '0' + HH;
+      } 
+      if (nn < 10) {
+        nn = '0' + nn;
       } 
       var sDay =  yyyy + '-' + mm + '-' + dd ;
       var sTime = HH + ':'+ nn;
@@ -319,6 +325,7 @@ class QuantitiesAndTimes extends React.Component {
 
 
             Mass of starter is {(this.state.startermass)} g
+            <DoughHydration doughmass={(this.state.doughmass)} startermass={(this.state.startermass)} />
           </FormGroup>
         </form>
       );
