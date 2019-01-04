@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/breadandpizza/precache-manifest.74aaa8acf3245fa3ab4f354472c2d8be.js"
+  "/breadandpizza/build/precache-manifest.a388fa32bccce9a08ddda23f763f5cfb.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/breadandpizza/index.html", {
+workbox.routing.registerNavigationRoute("/breadandpizza/build/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
