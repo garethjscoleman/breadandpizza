@@ -30,3 +30,35 @@
     transform: rotate(360deg);
   }
 }
+.form {
+  margin: 0 auto;
+  padding: 10px 30px 0;
+
+  @media (min-width: 800px) {
+    max-width: 60%;
+  }
+}
+
+.input-range {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+element.style {
+}
+.input-range__label--min {
+  top :25px;
+}
+.input-range__label--max {
+  top :25px;
+}
+span.input-range__label-container {
+  top: -15px;
+  font-size: large;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #000000;
+}
+
+.Show {display:block;}
+.Hide {display:none;}

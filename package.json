@@ -2,12 +2,15 @@
   "name": "breadandpizza",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://garethjscoleman.github.io/breadandpizza/build",
+  "homepage": "http://garethjscoleman.github.io/breadandpizza/build",
   "dependencies": {
     "caniuse-lite": "^1.0.30000916",
-    "react": "^16.6.1",
+    "moment": "^2.24.0",
+    "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.6.1",
+    "react-dom": "^16.7.0",
+    "react-input-moment": "^1.7.10",
+    "react-input-range": "^1.3.0",
     "react-scripts": "2.1.1"
   },
   "scripts": {

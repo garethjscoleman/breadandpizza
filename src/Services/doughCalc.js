@@ -46,6 +46,7 @@ export function  bakeTime(type,mass)
         case 'deeppan': 
             time =10;            
                 break;
+        case 'pizza':
         case 'napoletana':
         case 'romano': 
             time=7;            
@@ -60,6 +61,9 @@ export function  bakeTime(type,mass)
             time =((Math.pow(mass,1/3))/7)*40;            
             break;
         case 'smallbuns': 
+            time= 15;            
+            break;
+            case 'baguette': 
             time= 15;            
             break;
         case 'largebuns': 
