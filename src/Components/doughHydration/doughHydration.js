@@ -36,17 +36,17 @@ class DoughHydration extends React.Component {
 
     switch (this.props.breadType) {
       case 'pizza':
-        theState.flourType = 'DovesWhiteBread';
-        theState.hydration = 67;
+        theState.flourType = 'Type00Pasta';
+        theState.hydration = 68;
         break;
       case 'baguette':
         theState.flourType = 'FrenchT65_mixed_with_DovesWhiteBread';
         theState.hydration = 72;
         break;
       default:
-        theState.flourType = 'Type00Pasta';
-        theState.hydration = 68;
-    }
+      theState.flourType = 'DovesWhiteBread';
+      theState.hydration = 67;
+  }
     this.setState(theState);
     this.updateHydration();
 

@@ -310,7 +310,7 @@ class QuantitiesAndTimes extends React.Component {
               formatMinLabel={value => ` Min ${value} `}
               formatMaxLabel={value => ` Max ${value} `}
               step={1}
-              maxValue={11}
+              maxValue={18}
               minValue={7}
               value={this.state.size}
               onChange={size => {this.setState({ size }); this.handleSizeChange(size); }} 
@@ -352,9 +352,9 @@ class QuantitiesAndTimes extends React.Component {
               <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
 
             <div>
-              <button onClick={this.hideOrShow}   >
-                {(this.showClass)} the desired time 
-              </button>
+              <div onTouchStart={this.hideOrShow}   ><h4>
+          {this.state.show?<span> + Enter the desired time</span> : <span> - Close time entry</span> }
+              </h4></div>
               <div className={(this.showClass)}>
 
                 <ControlLabel>Which day do you want it</ControlLabel>

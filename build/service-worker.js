@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/breadandpizza/build/precache-manifest.1375096e1ce862f0e4202d447b2e0ba0.js"
+  "/breadandpizza/build/precache-manifest.6cb2daa7c6f3c50f8f110f37b7fcf03c.js"
 );
 
 workbox.clientsClaim();
