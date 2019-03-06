@@ -18,6 +18,7 @@ class QuantitiesAndTimes extends React.Component {
       var showClass = "Hide";
       this.showClass = showClass;
       this.handleChange = this.handleChange.bind(this);
+      this.handleHydrationChange = this.handleHydrationChange.bind(this);
       this.handleSizeChange = this.handleSizeChange.bind(this);
       this.handleWantedTimeChange = this.handleWantedTimeChange.bind(this);
       this.handleWantedDateChange = this.handleWantedDateChange.bind(this);
@@ -27,6 +28,7 @@ class QuantitiesAndTimes extends React.Component {
       this.handleStarterChange = this.handleStarterChange.bind(this);
       this.handleMassChange = this.handleMassChange.bind(this);
       this.handleMomentChange = this.handleMomentChange.bind(this);
+      this.saveState = this.saveState.bind(this);
       this.hideOrShow = this.hideOrShow.bind(this);
       this.state = {
         show :true,
@@ -36,6 +38,7 @@ class QuantitiesAndTimes extends React.Component {
         size : 9,
         temperature : 17,
         fridgetemperature : 5,
+        hydration:2,
         startermass : 100,
         doughmass : 250,
         moment: moment(), 
@@ -55,11 +58,23 @@ class QuantitiesAndTimes extends React.Component {
         timeToRise:0,
        
       };
+      var loadedStateString = localStorage.getItem('doughProps');
+      if (!!loadedStateString){
+        var loadedState = JSON.parse(loadedStateString);
+        this.state = loadedState;
+
+
+      }
 
     }
 
+    saveState(stateToSave){
+      this.setState(stateToSave);
+      localStorage.setItem('doughProps', JSON.stringify(stateToSave));
+    }
+
     hideOrShow(){
-      this.setState(state => ({
+      this.saveState(state => ({
         show: !state.show
       }));
       this.show = !this.show;
@@ -82,7 +97,7 @@ class QuantitiesAndTimes extends React.Component {
       var doughProps = this.state;
       doughProps = this.setDesiredStartTime(theDate, doughProps);
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
   
  
@@ -180,10 +195,14 @@ class QuantitiesAndTimes extends React.Component {
       else if (theDoughMass > 50000) return 'error';
       else return 'success';      
     }
+
+
+
     handleMomentChange(value){
       var doughProps = this.state;
       console.log(value.format('DD-MM-YYYY'));
-      this.setDesiredStartTime(value.toDate(),doughProps);      
+      this.setDesiredStartTime(value.toDate(),doughProps);  
+      this.saveState(doughProps);    
     }
 
 
@@ -218,15 +237,22 @@ class QuantitiesAndTimes extends React.Component {
       var doughProps = this.state;
       doughProps.quantity = value; 
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
       
 
     }
+    handleHydrationChange(value) {
+      var doughProps = this.state;
+      doughProps.hydration = value; 
+      doughProps = this.handleChangesToDoughRiseTime(doughProps);
+      this.saveState(doughProps);
+    }
+
     handleSizeChange(value) {
       var doughProps = this.state;
       doughProps.size = value; 
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
 
     }
     handleMassChange(value)
@@ -236,7 +262,7 @@ class QuantitiesAndTimes extends React.Component {
       doughProps.quantity =  value/225;
       doughProps.doughmass =  value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
 
 
     }
@@ -244,31 +270,31 @@ class QuantitiesAndTimes extends React.Component {
       var doughProps = this.state;
       doughProps.startermass = value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
     handleWantedTimeChange(e) {
       var doughProps = this.state;
       doughProps.desiredTime = e.target.value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
     handleWantedDateChange(e) {
       var doughProps = this.state;
       doughProps.desiredDate = e.target.value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
     handleFridgeChange(value) {
       var doughProps = this.state;
       doughProps.fridgetemperature = value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
     handleTempChange(value) {
       var doughProps = this.state;
       doughProps.temperature = value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
-      this.setState(doughProps);
+      this.saveState(doughProps);
     }
 
     render() {
@@ -277,7 +303,7 @@ class QuantitiesAndTimes extends React.Component {
       if (breadType!==doughProps.breadType)
       {
         doughProps = this.handleChangesToDoughRiseTime(doughProps);
-        this.setState(doughProps);
+        this.saveState(doughProps);
       }
       let wrapperClass = 'wrapper medium'  ;
       return(
@@ -300,7 +326,7 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={15}
               minValue={1}
               value={this.state.quantity}
-              onChange={quantity => {this.setState({ quantity }); this.handleChange(quantity); }} 
+              onChange={quantity => { this.handleChange(quantity); }} 
               onChangeComplete={value => console.log(value)}
               />
 
@@ -313,11 +339,12 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={18}
               minValue={7}
               value={this.state.size}
-              onChange={size => {this.setState({ size }); this.handleSizeChange(size); }} 
+              onChange={size => { this.handleSizeChange(size); } }
               onChangeComplete={value => console.log(value)}
               />
               <HelpBlock>This has to be a number between 7 and 18 inches.</HelpBlock> 
-              </div>: 
+              </div> 
+           :
               <div>
                 <ControlLabel>How large do you want your loaf?</ControlLabel>
                 <InputRange 
@@ -329,13 +356,15 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={3000}
               minValue={250}
               value={this.state.doughmass}
-              onChange={doughmass => {this.setState({ doughmass }); this.handleMassChange(doughmass); }} 
+              onChange={doughmass => { this.handleMassChange(doughmass); }} 
               onChangeComplete={value => console.log(value)}
               />
 
               <HelpBlock>This has to be a number between 1 and 5000.</HelpBlock>
             </div>
-            }
+              }
+             
+             
 
               <div> This is total mass of dough we need {Math.round((this.state.size*this.state.size/81)*this.state.quantity*225)}g</div>
               <ControlLabel>How Much Starter do you have?</ControlLabel>
@@ -346,12 +375,30 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={Math.round(this.state.doughmass/2)}
               minValue={0}
               value={this.state.startermass}
-              onChange={startermass => {this.setState({ startermass }); this.handleStarterChange(startermass); }} 
+              onChange={startermass => { this.handleStarterChange(startermass); }} 
               onChangeComplete={value => console.log(value)}
               />
               <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
 
             <div>
+            <ControlLabel>How much hydration ?</ControlLabel>
+             <InputRange 
+                formatLabel={value => {if(value<3){return 'Low';}if(value>4){return 'High';}return 'Medium'; }}
+                formatMinLabel={value => ` Low Hydration`}
+              formatMaxLabel={value => ` High Hydration`}
+
+           step={1}
+           maxValue={5}
+           minValue={1}
+           value={this.state.hydration}
+           onChange={hydration => { this.handleHydrationChange(hydration); }} 
+           onChangeComplete={value => console.log(value)}
+           />
+
+           <HelpBlock>This has to be a number between 1 and 3.</HelpBlock>
+        
+
+
               <div onTouchStart={this.hideOrShow}  ><h4>
           {this.state.show?<span> + Enter the desired time</span> : <span> - Close time entry</span> }
               </h4></div>
@@ -360,9 +407,9 @@ class QuantitiesAndTimes extends React.Component {
                 <ControlLabel>Which day do you want it</ControlLabel>
                 <div className={wrapperClass}>
                   <BigInputMoment
-                    moment={this.state.moment}
+                    moment={moment(this.state.moment)}
                     showSeconds={false}
-                    onChange={mom => { this.handleMomentChange(mom);this.setState({moment: mom});}}
+                    onChange={mom => { var doughProps=this.state; doughProps.moment= mom;this.saveState(doughProps);  this.handleMomentChange(mom);}}
                     locale="en"
                   />
                 </div>
@@ -376,7 +423,7 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={35}
               minValue={0}
               value={this.state.temperature}
-              onChange={temperature => {this.setState({ temperature }); this.handleTempChange(temperature); }} 
+              onChange={temperature => { this.handleTempChange(temperature); }} 
               onChangeComplete={value => console.log(value)}
               />
               <HelpBlock>This has to be a number between 4 and 35.</HelpBlock>
@@ -389,7 +436,7 @@ class QuantitiesAndTimes extends React.Component {
               maxValue={35}
               minValue={0}
               value={this.state.fridgetemperature}
-              onChange={fridgetemperature => {this.setState({ fridgetemperature }); this.handleFridgeChange(fridgetemperature); }} 
+              onChange={fridgetemperature => { this.handleFridgeChange(fridgetemperature); }} 
               onChangeComplete={value => console.log(value)}
               />
 
@@ -398,7 +445,7 @@ class QuantitiesAndTimes extends React.Component {
 
 
             </FormGroup>
-            <DisplayQuantitiesTimesTab fridgeplusroomshape={this.state.fridgeplusroomshape} roomplusfridgeshape={this.state.roomplusfridgeshape}  doughmass={this.state.doughmass} startermass={this.state.startermass} baketime={this.state.baketime} breadType={this.state.breadType} infridge={this.state.proofingtimes.infridge} fridgestart={this.state.fridgestart} fridgeshape={this.state.fridgeshape} roomshape={this.state.roomshape} roomstart={this.state.roomstart} inroom={this.state.proofingtimes.inroom} roomplusfridgestart={this.state.roomplusfridgestart} fridgeplusroomstart={this.state.fridgeplusroomstart} />
+            <DisplayQuantitiesTimesTab hydration={this.state.hydration}  fridgeplusroomshape={this.state.fridgeplusroomshape} roomplusfridgeshape={this.state.roomplusfridgeshape}  doughmass={this.state.doughmass} startermass={this.state.startermass} baketime={this.state.baketime} breadType={this.state.breadType} infridge={this.state.proofingtimes.infridge} fridgestart={this.state.fridgestart} fridgeshape={this.state.fridgeshape} roomshape={this.state.roomshape} roomstart={this.state.roomstart} inroom={this.state.proofingtimes.inroom} roomplusfridgestart={this.state.roomplusfridgestart} fridgeplusroomstart={this.state.fridgeplusroomstart} />
       
           </form>
       </div>);

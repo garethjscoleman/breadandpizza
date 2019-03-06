@@ -83,7 +83,7 @@ class DisplayQuantitiesTimesTab extends React.Component {
           id="controlled-tab-example"
         >
           <Tab eventKey={1} title="In Room">
-            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />
+            <DisplayQuantitiesAndTimes  start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />
           </Tab>
           <Tab eventKey={4} title="Fridge, then Room ">          
           <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />            </Tab>
@@ -93,7 +93,7 @@ class DisplayQuantitiesTimesTab extends React.Component {
           <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
         </Tabs>
                      
-                      <DoughHydration key={(this.props.breadType)}  breadType={(this.props.breadType)} doughmass={(this.props.doughmass)} startermass={(this.props.startermass)} />
+                      <DoughHydration hydration={this.props.hydration} key={(this.props.breadType)}  breadType={(this.props.breadType)} doughmass={(this.props.doughmass)} startermass={(this.props.startermass)} />
  
                </div>
       );

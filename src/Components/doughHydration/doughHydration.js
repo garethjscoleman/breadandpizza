@@ -35,6 +35,7 @@ class DoughHydration extends React.Component {
   updateHydrationRate() {
     var theState = this.state;
 
+
     switch (this.props.breadType) {
       case 'pizza':
         theState.flourType = 'Type00Pasta';
@@ -42,11 +43,11 @@ class DoughHydration extends React.Component {
         break;
       case 'baguette':
         theState.flourType = 'FrenchT65_mixed_with_DovesWhiteBread';
-        theState.hydration = 72;
+        theState.hydration = 72 + ((this.props.hydration-3)*5);
         break;
       default:
       theState.flourType = 'DovesWhiteBread';
-      theState.hydration = 67;
+      theState.hydration = 67 + ((this.props.hydration-3)*5);
   }
     this.setState(theState);
     this.updateHydration();
@@ -102,16 +103,42 @@ class DoughHydration extends React.Component {
 
         <span> Flour Type  {(this.state.flourType)}
         </span><br />
-        <span> Using Hydration  {(this.state.hydration)}
+        <span> Using Hydration  {(this.state.hydration)} (bakers %)
         </span><br />
-        <span> Mass to add to starter {(Math.round(this.props.doughmass - this.props.startermass))}
+        <span> Mass to add to starter {(Math.round(this.props.doughmass - this.props.startermass))}g
         </span><br />
         <h2>Made up of </h2>
-        <span> Flour Mass  {(Math.round(this.state.flourmass))}
+        <span> Flour Mass  {(Math.round(this.state.flourmass))}g
         </span><br />
-        <span> Water Mass  {(this.state.watermass)}
+        <span> Water Mass  {(this.state.watermass)}g
         </span><br />
+        {((this.props.hydration<3) || (this.props.breadType=='pizza'))?<div>
+
+        <span> Salt Mass  {(Math.round(this.state.flourmass*0.02))}g
+        </span>
+
+        </div> :<div>
+          <h2>Autolyse Made up of </h2>
+        <span> Flour Mass  {(Math.round(this.state.flourmass*0.8))}g
+        </span><br />
+        <span> Water Mass  {(Math.round(this.state.watermass*0.8))}g
+        </span><br />
+        <h2>Leaven  Mix Made up of </h2>
+        <span>Starter {(Math.round(this.props.startermass))} g plus </span><br/>
+        <span>Additional Flour Mass  {(Math.round(this.state.flourmass*0.2))}g
+        </span><br />
+        <span> Water for leaven Mass  {(Math.round(this.state.watermass*0.15))}g
+        </span><br />
+        <h2>Salt  Mix  </h2>
+        
+        <span>Salt Mass  {(Math.round(this.state.flourmass*0.02))}g
+        </span><br />
+        <span> Water to dissolve salt {(Math.round(this.state.watermass*0.05))}g
+        </span><br />
+
+        </div>}
       </div>
+
     );
   }
 }
