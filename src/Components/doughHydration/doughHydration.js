@@ -97,7 +97,7 @@ class DoughHydration extends React.Component {
          <span>Mass of starter is {(Math.round(this.props.startermass))} g</span><br/>
          <span>Mass of flour in starter is {(Math.round(this.state.starterflourmass))} g</span><br/>
          <span>Mass of water in starter is {(Math.round(this.props.startermass-this.state.starterflourmass))} g</span>
-        <h3>Remaining mass</h3>
+        <h3>Remaining mass </h3>
 
 
 
