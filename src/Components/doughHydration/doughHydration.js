@@ -47,7 +47,7 @@ class DoughHydration extends React.Component {
         break;
       default:
       theState.flourType = 'DovesWhiteBread';
-      theState.hydration = 67 + ((this.props.hydration-3)*5);
+      theState.hydration = 70 + ((this.props.hydration-3)*5);
   }
     this.setState(theState);
     this.updateHydration();
@@ -71,14 +71,17 @@ class DoughHydration extends React.Component {
   }
 
   componentDidUpdate(prevprops) {
-    if (this.props.breadType !== prevprops.breadType) {
-      this.updateHydratationRate();
+    if (this.props.breadType !== prevprops.breadType || this.props.hydration !== prevprops.hydration ) {
+      this.updateHydrationRate();
     }
-
+    
     if (this.props.doughmass !== prevprops.doughmass || this.props.startermass !== prevprops.startermass) {
       this.updateHydration();
     }
   }
+
+
+
 
 
 

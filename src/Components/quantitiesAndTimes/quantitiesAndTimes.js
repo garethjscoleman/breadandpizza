@@ -62,8 +62,6 @@ class QuantitiesAndTimes extends React.Component {
       if (!!loadedStateString){
         var loadedState = JSON.parse(loadedStateString);
         this.state = loadedState;
-
-
       }
 
     }
@@ -297,14 +295,20 @@ class QuantitiesAndTimes extends React.Component {
       this.saveState(doughProps);
     }
 
-    render() {
+    componentDidUpdate(prevprops) {
       const breadType = this.props.breadType;
       var doughProps = this.state;
-      if (breadType!==doughProps.breadType)
+      if (breadType!==prevprops.breadType)
       {
         doughProps = this.handleChangesToDoughRiseTime(doughProps);
         this.saveState(doughProps);
       }
+    }
+
+    render() {
+      const breadType = this.props.breadType;
+      var doughProps = this.state;
+     
       let wrapperClass = 'wrapper medium'  ;
       return(
 
