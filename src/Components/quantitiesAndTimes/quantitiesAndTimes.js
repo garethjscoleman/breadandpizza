@@ -7,8 +7,11 @@ import { doughCalc } from './../../Services/doughCalc';
 import { pizzaMass } from './../../Services/doughCalc';
 import { bakeTime } from './../../Services/doughCalc';
 import moment from 'moment';
+
+
 import ReactDOM from 'react-dom';
 import InputRange from 'react-input-range';
+import './quantitiesAndTimes.css';
 import "react-input-range/lib/css/index.css"
 
 class QuantitiesAndTimes extends React.Component {
@@ -26,11 +29,21 @@ class QuantitiesAndTimes extends React.Component {
       this.handleTempChange = this.handleTempChange.bind(this);
       this.setDesiredStartTime = this.setDesiredStartTime.bind(this);
       this.handleStarterChange = this.handleStarterChange.bind(this);
+      this.handleFreshYeastChange = this.handleFreshYeastChange.bind(this);
+      this.handleDryYeastChange = this.handleDryYeastChange.bind(this);
+      this.handleRaisingAgentChange = this.handleRaisingAgentChange.bind(this);
       this.handleMassChange = this.handleMassChange.bind(this);
       this.handleMomentChange = this.handleMomentChange.bind(this);
       this.saveState = this.saveState.bind(this);
       this.hideOrShow = this.hideOrShow.bind(this);
+      this.updateHydration = this.updateHydration.bind(this);
+      this.updateHydrationRate = this.updateHydrationRate.bind(this);
+      this.slideOptions = this.slideOptions.bind(this);
+      this.delayedSlideCall = this.delayedSlide; 
+
+
       this.state = {
+        slide:true,
         show :true,
         breadType: props.breadType,
         baketime:0,
@@ -39,9 +52,18 @@ class QuantitiesAndTimes extends React.Component {
         temperature : 17,
         fridgetemperature : 5,
         hydration:2,
+        hydrationpercent: 67,
+        hydrationadjust: 0,
         startermass : 100,
         doughmass : 250,
+        freshyeastmass : 30 ,
+        dryyeastmass : 7,
+        raisingagenttype:'Sourdough', 
+        raisingagenttypeval:0,
         moment: moment(), 
+        watermass:0,
+        saltmass:0,
+        starterflourmass:0,
         desiredDate: '1999-12-31',
         desiredTime: '23:59',
         desiredDateTime : 0,
@@ -58,18 +80,41 @@ class QuantitiesAndTimes extends React.Component {
         timeToRise:0,
        
       };
+      var flourTypes = [
+        'DovesWhiteBread',
+        'DovesBrownBread',
+        'AllPurpose',
+        'FrenchT55',
+        'FrenchT65',
+        'FrenchT65_mixed_with_DovesWhiteBread',
+        'Type00Pasta'
+      ];
+  
       var loadedStateString = localStorage.getItem('doughProps');
       if (!!loadedStateString){
         var loadedState = JSON.parse(loadedStateString);
         this.state = loadedState;
       }
-
     }
 
     saveState(stateToSave){
       this.setState(stateToSave);
       localStorage.setItem('doughProps', JSON.stringify(stateToSave));
     }
+
+
+    slideOptions = function(event){
+      event.persist()
+      this.delayedSlideCall()
+    };
+
+    delayedSlide = function(){
+
+      var stateToSave = this.state;
+      /* Toggle the options slider */
+      stateToSave.slide = !stateToSave.slide;
+      this.setState(stateToSave);  
+    }  
 
     hideOrShow(){
       this.saveState(state => ({
@@ -129,18 +174,74 @@ class QuantitiesAndTimes extends React.Component {
       return doughProps;
 
     }
+    updateHydration=function(doupghProps) {
+      var doughProps = this.state;
+      var remainingMass = doughProps.doughmass;
+      var hyrate  = doughProps.hydrationpercent+ doughProps.hydrationadjust;
+      if(doughProps.raisingagenttype===0){
+        remainingMass = doughProps.doughmass - doughProps.startermass;
+      }
+      
+      doughProps.watermass = Math.round(remainingMass * (hyrate) / (100 + (hyrate)));
+      doughProps.flourmass = remainingMass - doughProps.watermass;
+      doughProps.starterflourmass =  doughProps.startermass-Math.round(doughProps.startermass * hyrate / (100 + hyrate));
+      doughProps.remainingMass =remainingMass;
+      return doughProps;
+  
+    }
 
-
+    updateHydrationRate = function(doughProps) {
+  
+      switch (doughProps.breadType) 
+      {
+        case 'pizza':
+        doughProps.flourType = 'Type00Pasta';
+        doughProps.hydrationpercent = 68;
+        doughProps.hydrationadjust =0;
+          break;
+        case 'baguette':
+        doughProps.flourType = 'FrenchT65_mixed_with_DovesWhiteBread';
+        doughProps.hydrationpercent = 72; 
+        doughProps.hydrationadjust = (doughProps.hydration-3)*5;
+          break;
+        default:
+        doughProps.hydrationpercent = 70; 
+        doughProps.hydrationadjust = (doughProps.hydration-3)*5;
+      }
+      
+      return this.updateHydration(doughProps);
+      
+    }
+  
    
 
     calcTimeToRise = function(doughProps){
       doughProps.breadType= this.props.breadType;
       var proofingtimes = doughProps.proofingtimes;
-      var firstrisetime = doughCalc(doughProps.temperature,doughProps.startermass,doughProps.doughmass);
-      var secondrisetime = doughCalc(doughProps.fridgetemperature,doughProps.startermass,doughProps.doughmass); 
-      doughProps.proofingtimes.inroom = firstrisetime;
-      doughProps.proofingtimes.infridge = secondrisetime ;
-      doughProps.timeToRise = firstrisetime+secondrisetime ;
+      var roomrisetime = 0 ;
+      var fridgerisetime = 0 ;
+      if (doughProps.raisingagenttype== 'Sourdough')
+      {
+        roomrisetime = doughCalc(doughProps.temperature,doughProps.startermass,doughProps.doughmass,0,0);
+        fridgerisetime = doughCalc(doughProps.fridgetemperature,doughProps.startermass,doughProps.doughmass,0,0);  
+      }
+      else
+      {
+        if(doughProps.raisingagenttype== 'Fresh Yeast')
+        {
+          roomrisetime = doughCalc(doughProps.temperature,0,doughProps.doughmass,doughProps.freshyeastmass,0);
+          fridgerisetime = doughCalc(doughProps.fridgetemperature,0,doughProps.doughmass,doughProps.freshyeastmass,0);
+        }
+        else
+        {
+          roomrisetime = doughCalc(doughProps.temperature,0,doughProps.doughmass,0,doughProps.dryyeastmass);
+          fridgerisetime = doughCalc(doughProps.fridgetemperature,0,doughProps.doughmass,0,doughProps.dryyeastmass);    
+        }
+
+      }
+      doughProps.proofingtimes.inroom = roomrisetime;
+      doughProps.proofingtimes.infridge = fridgerisetime ;
+      doughProps.timeToRise = roomrisetime+fridgerisetime ;
       try {
         doughProps.desiredDateTime = Date.parse(doughProps.desiredDate + ' ' + doughProps.desiredTime);
       }
@@ -186,8 +287,8 @@ class QuantitiesAndTimes extends React.Component {
       if (theFridgeTemp < 1) return 'error';
       else if (theFridgeTemp > 35) return 'error';      
       const theStarterMass = this.state.startermass;
-      if (theStarterMass < 1) return 'error';
-      else if (theStarterMass > 50000) return 'error';      
+//      if (theStarterMass < 1) return 'error';
+//      else if (theStarterMass > 50000) return 'error';      
       const theDoughMass = this.state.doughmass;
       if (theDoughMass < 1) return 'error';
       else if (theDoughMass > 50000) return 'error';
@@ -206,6 +307,7 @@ class QuantitiesAndTimes extends React.Component {
 
     handleChangesToDoughRiseTime(doughProps){
       var newdoughmass; 
+      doughProps = this.updateHydrationRate(doughProps);
       if ( doughProps.breadType === "pizza"){
         newdoughmass = pizzaMass( doughProps.size, doughProps.quantity, 'napoletana' ) ; 
       }
@@ -213,7 +315,7 @@ class QuantitiesAndTimes extends React.Component {
       {
         newdoughmass = doughProps.doughmass;
       }
-      if (newdoughmass>1)
+      if (newdoughmass>1 )
       {
         doughProps.doughmass = newdoughmass;  
         var startermass = doughProps.startermass;
@@ -270,6 +372,48 @@ class QuantitiesAndTimes extends React.Component {
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
       this.saveState(doughProps);
     }
+
+    handleDryYeastChange (value) {
+      var doughProps = this.state;
+      doughProps.dryyeastmass = value;
+      doughProps = this.handleChangesToDoughRiseTime(doughProps);
+      this.saveState(doughProps);
+    }
+
+    handleFreshYeastChange(value) {
+      var doughProps = this.state;
+      doughProps.freshyeastmass = value;
+      doughProps = this.handleChangesToDoughRiseTime(doughProps);
+      this.saveState(doughProps);
+    }
+
+    handleRaisingAgentChange(value) {
+      var doughProps = this.state;
+      var prevraisingval=0;
+      switch (doughProps.raisingagenttype)
+      {
+        case 'Sourdough': prevraisingval= doughProps.startermass;break;
+        case 'Dry Yeast': prevraisingval= doughProps.dryyeastmass*90;break;
+        case 'Fresh Yeast': prevraisingval= doughProps.freshyeastmass*21;break;
+
+    }
+      switch (value){
+        case 0: doughProps.raisingagenttype='Sourdough';
+        doughProps.startermass=Math.round(prevraisingval);
+        break;
+        case 2: doughProps.raisingagenttype='Dry Yeast';
+        doughProps.dryyeastmass=Math.round(prevraisingval/90);
+        break;
+        case 1: doughProps.raisingagenttype='Fresh Yeast';
+        doughProps.freshyeastmass=Math.round(prevraisingval/21);
+        break;        
+      }
+      doughProps.raisingagenttypeval=value;
+      doughProps = this.handleChangesToDoughRiseTime(doughProps);
+      this.saveState(doughProps);
+    }
+
+
     handleWantedTimeChange(e) {
       var doughProps = this.state;
       doughProps.desiredTime = e.target.value;
@@ -307,44 +451,42 @@ class QuantitiesAndTimes extends React.Component {
 
     render() {
       const breadType = this.props.breadType;
+      
       var doughProps = this.state;
-     
       let wrapperClass = 'wrapper medium'  ;
       return(
 
-     <div>
-       <form className="form">
-        
-        </form>
-        <form className="form">
+     <div className="container">
+
+        { doughProps.slide ? 
+        <div className="leftbar">
+          <div className='theoptions'>
+          <form className="form">
             <FormGroup
               controlId="formPizzaQantities"
               validationState={this.getValidationState()}>
-              { breadType==="pizza" ? <div> 
+              { breadType==='pizza' ? <div> 
             
-              <ControlLabel>How Many Pizza&apos;s do you want?  {(this.state.breadType==="pizza")}</ControlLabel>
+              <ControlLabel>How Many Pizzas do you want?  {(this.state.breadType==="pizza")}</ControlLabel>
               <InputRange 
-              formatMinLabel={value => ` Min ${value} `}
-              formatMaxLabel={value => ` Max ${value} `}
               step={1}
               maxValue={15}
               minValue={1}
               value={this.state.quantity}
               onChange={quantity => { this.handleChange(quantity); }} 
-              onChangeComplete={value => console.log(value)}
+
               />
 
               <HelpBlock>This has to be a number between 1 and 5000.</HelpBlock>
               <ControlLabel>How big should they be</ControlLabel>
               <InputRange 
-              formatMinLabel={value => ` Min ${value} `}
-              formatMaxLabel={value => ` Max ${value} `}
-              step={1}
+              formatLabel={value =>  `  ${value} "`}
+               step={1}
               maxValue={18}
               minValue={7}
               value={this.state.size}
               onChange={size => { this.handleSizeChange(size); } }
-              onChangeComplete={value => console.log(value)}
+
               />
               <HelpBlock>This has to be a number between 7 and 18 inches.</HelpBlock> 
               </div> 
@@ -352,16 +494,16 @@ class QuantitiesAndTimes extends React.Component {
               <div>
                 <ControlLabel>How large do you want your loaf?</ControlLabel>
                 <InputRange 
-                formatLabel={value => `${value} g`}
-                formatMinLabel={value => `Min ${value} g`}
-                formatMaxLabel={value => `Max ${value} g`}
+                formatLabel={value=> `${value} g`}             
+                formatMinLabel={250}
+                formatMaxLabel={3000}
 
               step={50}
               maxValue={3000}
               minValue={250}
               value={this.state.doughmass}
               onChange={doughmass => { this.handleMassChange(doughmass); }} 
-              onChangeComplete={value => console.log(value)}
+
               />
 
               <HelpBlock>This has to be a number between 1 and 5000.</HelpBlock>
@@ -370,33 +512,81 @@ class QuantitiesAndTimes extends React.Component {
              
              
 
-              <div> This is total mass of dough we need {Math.round((this.state.size*this.state.size/81)*this.state.quantity*225)}g</div>
-              <ControlLabel>How Much Starter do you have?</ControlLabel>
+              <div> This is total mass of dough we need {Math.round((this.state.size*this.state.size/81)*this.state.quantity*225)}g
+              </div>
+              
+              <ControlLabel>What Type of Raising Agent do you want to use?</ControlLabel>
               <InputRange 
-              formatMinLabel={value => ` Min ${value} g`}
-              formatMaxLabel={value => ` Max ${value} g`}
-              step={Math.round(this.state.doughmass/60)}
-              maxValue={Math.round(this.state.doughmass/2)}
+              formatLabel={value => {if(value===0){return 'Sour Dough';}if(value===1){return 'Fresh Yeast';}return 'Dry Yeast'; }}
+              formatMinLabel={'Sour Dough'}
+              formatMaxLabel={'Dry Yeast'}
+              step={1}
+              maxValue={2}
               minValue={0}
-              value={this.state.startermass}
-              onChange={startermass => { this.handleStarterChange(startermass); }} 
-              onChangeComplete={value => console.log(value)}
-              />
-              <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
+              value={this.state.raisingagenttypeval}
+              onChange={raisingagent => { this.handleRaisingAgentChange(raisingagent); }} 
 
-            <div>
+              />
+              <HelpBlock></HelpBlock>
+              { doughProps.raisingagenttypeval===0 ? 
+                  <div> 
+
+                  <ControlLabel>How Much Starter do you have?</ControlLabel>
+                  <InputRange 
+                  formatLabel={value => ` ${value} g`}
+                  step={Math.round(this.state.doughmass/60)}
+                  maxValue={Math.round(this.state.doughmass/2)}
+                  minValue={1}
+                  value={this.state.startermass}
+                  onChange={startermass => { this.handleStarterChange(startermass); }} 
+
+                  />
+                  <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
+                    </div>:<div>
+                  {  doughProps.raisingagenttypeval===2 ?
+                    <div>
+                      <ControlLabel>How Much Dry Yeast do you want to use?</ControlLabel>
+                      <InputRange 
+                      formatLabel={value => ` ${value} g`}
+                      step={0.5}
+                      maxValue={Math.round(this.state.doughmass/90)}
+                      minValue={1}
+                      value={this.state.dryyeastmass}
+                      onChange={dryyeastmass => { this.handleDryYeastChange(dryyeastmass); }} 
+
+                      />
+
+
+                    </div>:<div> 
+
+                      <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
+                    <ControlLabel>How Much Fresh Yeast do you want to use?</ControlLabel>
+                    <InputRange 
+                    formatLabel={value => ` ${value} g`}
+                    step={1}
+                    maxValue={Math.round(this.state.doughmass/(21))}
+                    minValue={1}
+                    value={this.state.freshyeastmass}
+                    onChange={freshyeastmass => { this.handleFreshYeastChange(freshyeastmass); }} 
+
+                    />
+                    <HelpBlock>This has to be a number between 10 and 5000.</HelpBlock>
+
+                    </div> }
+                </div>                  
+              }
             <ControlLabel>How much hydration ?</ControlLabel>
              <InputRange 
                 formatLabel={value => {if(value<3){return 'Low';}if(value>4){return 'High';}return 'Medium'; }}
-                formatMinLabel={value => ` Low Hydration`}
-              formatMaxLabel={value => ` High Hydration`}
+                formatMinLabel={' Low Hydration'}
+              formatMaxLabel={' High Hydration'}
 
            step={1}
            maxValue={5}
            minValue={1}
            value={this.state.hydration}
            onChange={hydration => { this.handleHydrationChange(hydration); }} 
-           onChangeComplete={value => console.log(value)}
+
            />
 
            <HelpBlock>This has to be a number between 1 and 3.</HelpBlock>
@@ -418,30 +608,29 @@ class QuantitiesAndTimes extends React.Component {
                   />
                 </div>
               </div>
-            </div>
               <ControlLabel>How warm is the room?</ControlLabel>
               <InputRange 
-              formatMinLabel={value => ` Min ${value} g`}
-              formatMaxLabel={value => ` Max ${value} g`}
+              formatMinLabel={value => ' Min ${value} g'}
+              formatMaxLabel={value => ' Max ${value} g'}
               step={1}
               maxValue={35}
               minValue={0}
               value={this.state.temperature}
               onChange={temperature => { this.handleTempChange(temperature); }} 
-              onChangeComplete={value => console.log(value)}
+
               />
               <HelpBlock>This has to be a number between 4 and 35.</HelpBlock>
               <ControlLabel>How cold is the fridge?</ControlLabel>
               
               <InputRange 
-              formatMinLabel={value => ` Min ${value} g`}
-              formatMaxLabel={value => ` Max ${value} g`}
+              formatMinLabel={value => ' Min ${value} g'}
+              formatMaxLabel={value => ' Max ${value} g'}
               step={1}
               maxValue={35}
               minValue={0}
               value={this.state.fridgetemperature}
               onChange={fridgetemperature => { this.handleFridgeChange(fridgetemperature); }} 
-              onChangeComplete={value => console.log(value)}
+
               />
 
               <HelpBlock>This has to be a number between 4 and 35.</HelpBlock>
@@ -449,9 +638,43 @@ class QuantitiesAndTimes extends React.Component {
 
 
             </FormGroup>
-            <DisplayQuantitiesTimesTab hydration={this.state.hydration}  fridgeplusroomshape={this.state.fridgeplusroomshape} roomplusfridgeshape={this.state.roomplusfridgeshape}  doughmass={this.state.doughmass} startermass={this.state.startermass} baketime={this.state.baketime} breadType={this.state.breadType} infridge={this.state.proofingtimes.infridge} fridgestart={this.state.fridgestart} fridgeshape={this.state.fridgeshape} roomshape={this.state.roomshape} roomstart={this.state.roomstart} inroom={this.state.proofingtimes.inroom} roomplusfridgestart={this.state.roomplusfridgestart} fridgeplusroomstart={this.state.fridgeplusroomstart} />
+            </form>
+          
+          </div>
+          <div className='slideBar' onClick={(this.slideOptions)}   ></div>  
+          </div> :
+          <div className='slideBar second' onClick={(this.slideOptions)}  ></div>}
+        <div className="center">
+
+            <DisplayQuantitiesTimesTab 
+            hydrationpercent={this.state.hydrationpercent}  
+            hydrationadjust={this.state.hydrationadjust}  
+            fridgeplusroomshape={this.state.fridgeplusroomshape} 
+            roomplusfridgeshape={this.state.roomplusfridgeshape}  
+            doughmass={this.state.doughmass}   
+            watermass  = {this.state.watermass}
+            flourmass = {this.state.flourmass}
+            flourType={this.state.flourType}
+            raisingagenttype={this.state.raisingagenttypeval} 
+            freshyeastmass={this.state.freshyeastmass} 
+            dryyeastmass={this.state.dryyeastmass} 
+            startermass={this.state.startermass} 
+            starterflourmass={this.state.starterflourmass}
+            baketime={this.state.baketime} 
+            breadType={this.state.breadType} 
+            infridge={this.state.proofingtimes.infridge} 
+            fridgestart={this.state.fridgestart} 
+            fridgeshape={this.state.fridgeshape} 
+            roomshape={this.state.roomshape} 
+            roomstart={this.state.roomstart} 
+            inroom={this.state.proofingtimes.inroom} 
+            roomplusfridgestart={this.state.roomplusfridgestart} 
+            fridgeplusroomstart={this.state.fridgeplusroomstart} />
       
-          </form>
+      
+          </div>
+          <div className='right'>
+          </div>
       </div>);
       }  
     }

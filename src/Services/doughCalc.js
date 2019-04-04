@@ -1,15 +1,28 @@
-export function doughCalc(temperature,startermass,doughmass) {
+export function doughCalc(temperature,startermass,doughmass,freshyeastmass,dryyeastmass) {
 
 
     var timeinMinutes = 0;
-    if (temperature<4 || temperature>35 || startermass<1 || startermass>5000 || doughmass<1 || doughmass>5000 )
+    if (temperature<4 || temperature>35 || startermass+freshyeastmass+dryyeastmass<1 || startermass+dryyeastmass+freshyeastmass>5000 || doughmass<1 || doughmass>5000 )
     {
         //hmm something funny going on 
         return 1;
     }
-    //timeinMinutes = 45/(Math.pow(2,((35-this.state.temperature)/7))*(1+Math.log2(0.5)-Math.log2(this.state.startermass/this.state.doughmass)));
-    timeinMinutes = (45)/(1/(Math.pow(2,((35-temperature)/7))*(1+Math.log2(0.5)-Math.log2(startermass/doughmass))));
-    
+    if (dryyeastmass >0 )
+    {
+        timeinMinutes = (45)/(1/(Math.pow(2,((35-temperature)/7))*(1+Math.log2(0.5)-Math.log2((dryyeastmass*70)/doughmass))));
+    }
+    else
+    {
+        if (freshyeastmass>0){
+            timeinMinutes = (45)/(1/(Math.pow(2,((35-temperature)/7))*(1+Math.log2(0.5)-Math.log2((freshyeastmass*10)/doughmass))));
+
+        }
+        else
+        {
+        //timeinMinutes = 45/(Math.pow(2,((35-this.state.temperature)/7))*(1+Math.log2(0.5)-Math.log2(this.state.startermass/this.state.doughmass)));
+        timeinMinutes = (45)/(1/(Math.pow(2,((35-temperature)/7))*(1+Math.log2(0.5)-Math.log2(startermass/doughmass))));
+        }    
+    }
     return Math.round(timeinMinutes);
 
 

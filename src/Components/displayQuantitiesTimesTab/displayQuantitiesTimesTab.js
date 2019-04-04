@@ -86,14 +86,33 @@ class DisplayQuantitiesTimesTab extends React.Component {
             <DisplayQuantitiesAndTimes  start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />
           </Tab>
           <Tab eventKey={4} title="Fridge, then Room ">          
-          <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />            </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />            </Tab>
           <Tab eventKey={3} title="Room, then Fridge " >          
-          <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
           <Tab eventKey={2} title="In Fridge">          
-          <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
         </Tabs>
-                     
-                      <DoughHydration hydration={this.props.hydration} key={(this.props.breadType)}  breadType={(this.props.breadType)} doughmass={(this.props.doughmass)} startermass={(this.props.startermass)} />
+
+                      <DoughHydration 
+                      flourType={(this.props.flourType)}
+                      hydrationpercent={(this.props.hydrationpercent)} 
+                      hydrationadjust={(this.props.hydrationadjust)} 
+                      key={(this.props.breadType)}  
+                      breadType={(this.props.breadType)} 
+                      doughmass={(this.props.doughmass)} 
+                      startermass={(this.props.startermass)} 
+                      raisingagenttype={(this.props.raisingagenttype)}
+                      dryyeastmass={(this.props.dryyeastmass)}  
+                      freshyeastmass={(this.props.freshyeastmass)}                   
+                      watermass={(this.props.watermass)}
+                      flourmass={(this.props.flourmass)}
+                      flourType={(this.props.flourType)}
+                      starterflourmass={(this.props.starterflourmass)}
+                      milkmass={(0)}
+                      eggmass={(0)}
+                      oilmass={(0)}
+                      
+                      />
  
                </div>
       );

@@ -1,0 +1,57 @@
+div.bucketscontainer {
+    height:80vh;
+    background-color:rgb(175,175,175);
+}
+
+div.bucketcontainermainmix {
+    height: 70vh;
+}
+
+div.bucketcontainerautolysemix {
+    height: 70vh;
+}
+
+div.bucketcontainerstartermix {
+    height:70vh;
+}
+
+div.bucketcontainersaltmix {
+    height:70vh;
+}
+
+div.bucketButtons
+{
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+div.bucketscroller {
+    height: 10vh;    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.hide {
+
+    display:none !Important;
+}
+
+div.circle {
+    background-color: rgb(100,100,255);
+    border-radius: 50%;
+    margin: 3px;
+    width:  25px;
+    height: 25px;
+    float: left;
+}
+
+div.circlehighlight {
+    background-color: rgb(100,100,255);
+    border-radius: 50%;
+    width:  31px;
+    height: 31px;
+    float: left;
+}

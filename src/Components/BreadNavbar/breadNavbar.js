@@ -71,6 +71,7 @@ class BreadNavbar extends Component
           <Navbar.Brand>
             <a href="#home">Bread and Pizza - {(this.state.breadType)}</a>
           </Navbar.Brand>
+          
           <Navbar.Toggle/>
         </Navbar.Header>
         
