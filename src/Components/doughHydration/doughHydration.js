@@ -20,8 +20,10 @@ class DoughHydration extends React.Component {
         <BucketContainer 
         flourmass={(Math.round(this.props.flourmass))}
         watermass={(Math.round(this.props.watermass))}
-        saltmass={(Math.round(this.props.flourmass*0.03))}
+        saltmass={(Math.round(this.props.flourmass*0.02))}
         saltwatermass={(Math.round(this.props.watermass*0.05))}
+        autolyseflourmass= {(Math.round(0.8*this.props.flourmass))}
+        autolysewatermass= {(Math.round(0.8*this.props.watermass))}
         starterflourmass={(Math.round(this.props.starterflourmass))}
         starterwatermass={(Math.round(this.props.startermass-this.props.starterflourmass))}
         startermass={(this.props.startermass)}
@@ -80,7 +82,7 @@ class DoughHydration extends React.Component {
         </span><br />
         <h2>Salt  Mix  </h2>
         
-        <span>Salt Mass  {(Math.round(this.props.flourmass*0.03))}g
+        <span>Salt Mass  {(Math.round(this.props.flourmass*0.02))}g
         </span><br />
         <span> Water to dissolve salt {(Math.round(this.props.watermass*0.05))}g
         </span><br />

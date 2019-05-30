@@ -26,9 +26,9 @@ class BucketContainer extends React.Component {
     stateToSave.view++;
     stateToSave.clicked=2;
     if (stateToSave.view===3 && this.props.raisingagenttypeval!==0){
-      stateToSave.view++;
+      stateToSave.view=5;
     }
-    if(stateToSave.view>4){
+    if(stateToSave.view>5){
       stateToSave.view=1;
     }
     this.setState(stateToSave);  
@@ -36,7 +36,7 @@ class BucketContainer extends React.Component {
 
   render() {
     var view = this.state.view;
-    var displaystarter = (view===3 && this.props.raisingagenttypeval===0);
+    var displaystarter = ((view===3 || view===4  ) && this.props.raisingagenttypeval===0);
     if (!displaystarter){
 
     }
@@ -74,8 +74,8 @@ class BucketContainer extends React.Component {
         :<div/>}
     {(view===2) ?
         <div className='bucketcontainerautolysemix'>
-        <Bucket flour={(this.props.flourmass)}
-        water={(this.props.watermass)}
+        <Bucket flour={Math.round(0.8*this.props.autolyseflourmass)}
+        water={Math.round(0.8*this.props.autolysewatermass)}
         salt='0'
         egg='0'
         oil='0'
@@ -87,7 +87,7 @@ class BucketContainer extends React.Component {
         </div>
         : <div/>
     }
-    { (displaystarter===true) ?
+    { (displaystarter===true && view===3 ) ?
         <div className='bucketcontainerstartermix'>
         <Bucket flour={(this.props.starterflourmass)}
         water={(this.props.starterwatermass)}
@@ -102,7 +102,21 @@ class BucketContainer extends React.Component {
         </div> :
       <div/>
       }
-      {  view===4 ?
+      {  (displaystarter===true && view===4) ?
+        <div className='bucketcontainerleavenmix'>
+        <Bucket flour={(Math.round(this.props.flourmass*0.2))}
+        water={(Math.round(this.props.watermass*0.15))}
+        salt='0'
+        egg='0'
+        oil='0'
+        freshyeast='0'
+        dryyeast='0' 
+        milk='0'
+        starter={(this.props.startermass)}
+        title='Leaven Mix'/>
+        </div>
+        :<div/> }
+      {  view===5 ?
         <div className='bucketcontainersaltmix'>
         <Bucket flour='0'
         water={(this.props.saltwatermass)}
@@ -133,10 +147,13 @@ class BucketContainer extends React.Component {
         {(view===4) ?
             <div className="circlehighlight" ></div>
 :            <div className="circle" ></div>}
+        {(view===5) ?
+            <div className="circlehighlight" ></div>
+:            <div className="circle" ></div>}
           </div>
+          
         </div>
     </div>
-
     );
   }
 }

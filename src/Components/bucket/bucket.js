@@ -8,13 +8,7 @@ class Bucket extends React.Component {
     this.display = this.display.bind(this);
 
   }
- 
-  
 
- 
-  
-
- 
   
  
   display = function(percent){
@@ -63,11 +57,11 @@ class Bucket extends React.Component {
       'display': (this.display(egg))
     };
     var waterStyle = {
-      'height': (water-10) + heightorwidth,
+      'height': Math.round(0.9*water) + heightorwidth,
       'display': (this.display(water))
     };
     var flourStyle = {
-      'height': flour + heightorwidth,
+      'height': Math.round(0.9*flour) + heightorwidth,
       'display': (this.display(flour))
     };
     var saltStyle = {

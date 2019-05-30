@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock}  from 'react-bootstrap';
 import {InputMoment, BigInputMoment, DatePicker, TimePicker} from 'react-input-moment';
 import DisplayQuantitiesTimesTab from './../displayQuantitiesTimesTab/displayQuantitiesTimesTab'; 
-
+import  TitleComp  from './../titleComp/titleComp';
+import  ImageComp  from './../imageComp/imageComp';
 import { doughCalc } from './../../Services/doughCalc';
 import { pizzaMass } from './../../Services/doughCalc';
 import { bakeTime } from './../../Services/doughCalc';
@@ -78,6 +79,113 @@ class QuantitiesAndTimes extends React.Component {
           infridge : 0
         },
         timeToRise:0,
+        recipe:{
+          title:'This is a recipe',
+          subtitle:'this is a subtitle',
+          imagedescription:'this is an alt text',
+          imageUrl:'http://imageUrl',
+          ingredients: [
+            {
+              name: 'flour',
+              quantity: 30,
+              unit: 'g',
+              id: 0
+            },
+            {
+              name: 'water',
+              quantity: 30,
+              ubit: 'g',
+              id: 1
+            },
+            {
+              name: 'yeast',
+              quantity: 30,
+              ubit: 'g',
+              id: 2
+            },
+            {
+              name: 'salt',
+              quantity: 30,
+              ubit: 'g',
+              id: 3
+            },
+            {
+              name: 'starter',
+              quantity: 30,
+              ubit: 'g',
+              id: 4
+            },
+            {
+              name: 'oil',
+              quantity: 30,
+              ubit: 'g',
+              id: 5
+            },
+            {
+              name: 'butter',
+              quantity: 30,
+              ubit: 'g',
+              id: 6
+            },
+            {
+              name: 'eggs',
+              quantity: 30,
+              ubit: 'g',
+              id: 6
+            }
+          ],
+          instructions: [
+            {
+              id: 0,
+              description: 'mix',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 1,
+              description: 'autolyse',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 2,
+              description: 'knead',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 3,
+              description: 'wait',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 4,
+              description: 'shape',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 5,
+              description: 'proof',
+              temp: 0,
+              start: '00:02',
+              duratiob: '00:05'
+            },
+            {
+              id: 6,
+              description: 'bake',
+              temp: 230,
+              start: '00:02',
+              duratiob: '00:05'
+            }
+          ]
+        },
        
       };
       var flourTypes = [
@@ -177,14 +285,14 @@ class QuantitiesAndTimes extends React.Component {
     updateHydration=function(doupghProps) {
       var doughProps = this.state;
       var remainingMass = doughProps.doughmass;
-      var hyrate  = doughProps.hydrationpercent+ doughProps.hydrationadjust;
-      if(doughProps.raisingagenttype===0){
+      var hydrate  = doughProps.hydrationpercent+ doughProps.hydrationadjust;
+      if(doughProps.raisingagenttypeval===0){
         remainingMass = doughProps.doughmass - doughProps.startermass;
       }
       
-      doughProps.watermass = Math.round(remainingMass * (hyrate) / (100 + (hyrate)));
+      doughProps.watermass = Math.round(remainingMass * (hydrate) / (100 + (hydrate)));
       doughProps.flourmass = remainingMass - doughProps.watermass;
-      doughProps.starterflourmass =  doughProps.startermass-Math.round(doughProps.startermass * hyrate / (100 + hyrate));
+      doughProps.starterflourmass =  doughProps.startermass-Math.round(doughProps.startermass * hydrate / (100 + hydrate));
       doughProps.remainingMass =remainingMass;
       return doughProps;
   
@@ -670,14 +778,15 @@ class QuantitiesAndTimes extends React.Component {
             inroom={this.state.proofingtimes.inroom} 
             roomplusfridgestart={this.state.roomplusfridgestart} 
             fridgeplusroomstart={this.state.fridgeplusroomstart} />
-      
-      
-          </div>
+
+        </div>
           <div className='right'>
           </div>
       </div>);
       }  
     }
   
+        //   <TitleComp title={this.state.recipe.title} subtitle={this.state.recipe.subtitle}/>             
+        //   <ImageComp imagedescription={this.state.recipe.imagedescription} imageUrl={this.state.recipe.ImageUrl}/> 
   
   export default QuantitiesAndTimes;
