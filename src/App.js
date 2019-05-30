@@ -43,7 +43,7 @@ class App extends Component {
       <div className="App">
        
          <BreadNavbar navExpanded='true'  breadType={(this.state.breadType)}  onChangeBreadType={this.handleBreadtype} onChangeLocation={this.handleNavChange} />
-         {this.state.location !== undefined && this.state.location == 'signin' &&
+         {this.state.location !== undefined && this.state.location === 'signin' &&
           <SignInScreen/>
          }
          <QuantitiesAndTimes breadType={(this.state.breadType)}/>

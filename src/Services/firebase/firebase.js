@@ -12,8 +12,8 @@ const config = ({
     databaseURL: "https://breadandpizza.firebaseio.com",
     projectId: "breadandpizza",
     storageBucket: "breadandpizza.appspot.com",
-    messagingSenderId: "346617442632",
-    appId: "1:346617442632:web:8960dc57f42d6dec"
+    messagingSenderId: process.env.REACT_APP_MESSAGESENDERID ,
+    appId: process.env.REACT_APP_APPID
     
    });
 

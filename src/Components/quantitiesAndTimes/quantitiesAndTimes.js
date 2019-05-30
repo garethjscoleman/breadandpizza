@@ -8,7 +8,7 @@ import { doughCalc } from './../../Services/doughCalc';
 import { pizzaMass } from './../../Services/doughCalc';
 import { bakeTime } from './../../Services/doughCalc';
 import moment from 'moment';
-
+import recipelist from './../../RecipeList/recipelist';
 
 import ReactDOM from 'react-dom';
 import InputRange from 'react-input-range';
@@ -79,115 +79,10 @@ class QuantitiesAndTimes extends React.Component {
           infridge : 0
         },
         timeToRise:0,
-        recipe:{
-          title:'This is a recipe',
-          subtitle:'this is a subtitle',
-          imagedescription:'this is an alt text',
-          imageUrl:'http://imageUrl',
-          ingredients: [
-            {
-              name: 'flour',
-              quantity: 30,
-              unit: 'g',
-              id: 0
-            },
-            {
-              name: 'water',
-              quantity: 30,
-              ubit: 'g',
-              id: 1
-            },
-            {
-              name: 'yeast',
-              quantity: 30,
-              ubit: 'g',
-              id: 2
-            },
-            {
-              name: 'salt',
-              quantity: 30,
-              ubit: 'g',
-              id: 3
-            },
-            {
-              name: 'starter',
-              quantity: 30,
-              ubit: 'g',
-              id: 4
-            },
-            {
-              name: 'oil',
-              quantity: 30,
-              ubit: 'g',
-              id: 5
-            },
-            {
-              name: 'butter',
-              quantity: 30,
-              ubit: 'g',
-              id: 6
-            },
-            {
-              name: 'eggs',
-              quantity: 30,
-              ubit: 'g',
-              id: 6
-            }
-          ],
-          instructions: [
-            {
-              id: 0,
-              description: 'mix',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 1,
-              description: 'autolyse',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 2,
-              description: 'knead',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 3,
-              description: 'wait',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 4,
-              description: 'shape',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 5,
-              description: 'proof',
-              temp: 0,
-              start: '00:02',
-              duratiob: '00:05'
-            },
-            {
-              id: 6,
-              description: 'bake',
-              temp: 230,
-              start: '00:02',
-              duratiob: '00:05'
-            }
-          ]
-        },
+        recipeid: 0 ,
        
       };
+      this.recipelist = recipelist;
       var flourTypes = [
         'DovesWhiteBread',
         'DovesBrownBread',
@@ -503,7 +398,7 @@ class QuantitiesAndTimes extends React.Component {
         case 'Sourdough': prevraisingval= doughProps.startermass;break;
         case 'Dry Yeast': prevraisingval= doughProps.dryyeastmass*90;break;
         case 'Fresh Yeast': prevraisingval= doughProps.freshyeastmass*21;break;
-
+        default: prevraisingval = doughProps.startermass;
     }
       switch (value){
         case 0: doughProps.raisingagenttype='Sourdough';
@@ -515,6 +410,8 @@ class QuantitiesAndTimes extends React.Component {
         case 1: doughProps.raisingagenttype='Fresh Yeast';
         doughProps.freshyeastmass=Math.round(prevraisingval/21);
         break;        
+        default:
+            doughProps.raisingagenttype='Sourdough';
       }
       doughProps.raisingagenttypeval=value;
       doughProps = this.handleChangesToDoughRiseTime(doughProps);
@@ -778,7 +675,8 @@ class QuantitiesAndTimes extends React.Component {
             inroom={this.state.proofingtimes.inroom} 
             roomplusfridgestart={this.state.roomplusfridgestart} 
             fridgeplusroomstart={this.state.fridgeplusroomstart} />
-
+            <TitleComp title={(this.recipelist[this.state.recipeid].title)} subtitle={(this.recipelist[this.state.recipeid].subtitle)}/>
+            <ImageComp imagedescription={(this.recipelist[this.state.recipeid].imagedescription)} imageUrl={(this.recipelist[this.state.recipeid].ImageUrl)}/>
         </div>
           <div className='right'>
           </div>
@@ -786,7 +684,7 @@ class QuantitiesAndTimes extends React.Component {
       }  
     }
   
-        //   <TitleComp title={this.state.recipe.title} subtitle={this.state.recipe.subtitle}/>             
-        //   <ImageComp imagedescription={this.state.recipe.imagedescription} imageUrl={this.state.recipe.ImageUrl}/> 
+                        
+            
   
   export default QuantitiesAndTimes;
