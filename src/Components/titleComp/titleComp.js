@@ -1,12 +1,9 @@
- import React, { Component } from 'react';
+ import React from 'react';
 
  import './titleComp.css';
  
  class TitleComp extends React.Component {
-   constructor(props) {
-     super(props)    
-     
-   }
+
    
    render() {
      return (

@@ -1,38 +1,40 @@
 
-import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Tabs,Tab}  from 'react-bootstrap';
+import React from 'react';
+import { Tabs,Tab}  from 'react-bootstrap';
 import  DoughHydration from '../doughHydration/doughHydration';
 import DisplayQuantitiesAndTimes from './../displayQuantitiesAndTimes/displayQuantititesAndTimes'; 
+import recipeContext from './../../Context/context';
 
 class DisplayQuantitiesTimesTab extends React.Component {
   
   
   constructor(props, context) {
-    var start = 0;
-    var place = 0;
-    var shape = null;
-    var breadType = '';
-    var title = '';
-    var interfere = [0];
-    var baketime =  [0];
-    var time = [0];
-    var location=[''];
+//    var start = 0;
+//    var place = 0;
+//    var shape = null;
+//    var title = '';
+//    var interfere = [0];
+//    var baketime =  [0];
+//    var time = [0];
+//    var location=[''];
   
-  
+
     super(props, context);
 
       this.handleSelect = this.handleSelect.bind(this);
       this.ensureDisplayOnNav = this.ensureDisplayOnNav.bind(this);
                              this.state = {
-        key: 1
+        key: 1,
+        baketime:0,
+        risetime:0,
       };
+      this.ensureDisplayOnNav(1)
 
-      const theDoughProps = this.props.doughProps;
-      this.breadType = this.props.breadType;
-      this.baketime =  [this.props.baketime] ;     
-      this.handleSelect(1);
+      this.baketime =  [this.props.baketime] ;
       
     }
+
+
 
     handleSelect(key) {
       this.setState({ key });
@@ -70,10 +72,7 @@ class DisplayQuantitiesTimesTab extends React.Component {
     }
 
     render() {
-
-      this.breadType = this.props.breadType;
       this.baketime =  [this.props.baketime] ;
-      this.ensureDisplayOnNav(this.state.key);
       return (
         <div>
         <h2>Rise and Baking Time</h2>
@@ -83,34 +82,18 @@ class DisplayQuantitiesTimesTab extends React.Component {
           id="controlled-tab-example"
         >
           <Tab eventKey={1} title="In Room">
-            <DisplayQuantitiesAndTimes  start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />
+            <DisplayQuantitiesAndTimes  start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere}  location={this.location} />
           </Tab>
           <Tab eventKey={4} title="Fridge, then Room ">          
-            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />            </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere}  location={this.location} />            </Tab>
           <Tab eventKey={3} title="Room, then Fridge " >          
-            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere}  location={this.location} />          </Tab>
           <Tab eventKey={2} title="In Fridge">          
-            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere} breadType={this.breadType} location={this.location} />          </Tab>
+            <DisplayQuantitiesAndTimes start={this.start} title={this.title} baketime={this.baketime} time={this.time} interfere={this.interfere}  location={this.location} />          </Tab>
         </Tabs>
 
-                      <DoughHydration 
-                      flourType={(this.props.flourType)}
-                      hydrationpercent={(this.props.hydrationpercent)} 
-                      hydrationadjust={(this.props.hydrationadjust)} 
-                      key={(this.props.breadType)}  
-                      breadType={(this.props.breadType)} 
-                      doughmass={(this.props.doughmass)} 
-                      startermass={(this.props.startermass)} 
-                      raisingagenttype={(this.props.raisingagenttype)}
-                      dryyeastmass={(this.props.dryyeastmass)}  
-                      freshyeastmass={(this.props.freshyeastmass)}                   
-                      watermass={(this.props.watermass)}
-                      flourmass={(this.props.flourmass)}
-                      flourType={(this.props.flourType)}
-                      starterflourmass={(this.props.starterflourmass)}
-                      milkmass={(0)}
-                      eggmass={(0)}
-                      oilmass={(0)}
+<DoughHydration key={window.location.href} hydration={(this.context.recipe.basehydration)} recipe={(this.context.recipe.recipeid)}
+
                       
                       />
  
@@ -118,5 +101,8 @@ class DisplayQuantitiesTimesTab extends React.Component {
       );
     }
   }
+
+  DisplayQuantitiesTimesTab.contextType = recipeContext;
+
 
   export default DisplayQuantitiesTimesTab;

@@ -1,0 +1,31 @@
+.ingredients {
+    display: flex;
+    flex-direction: column;
+/*    width:90vw;*/
+}
+
+.ingredientRow {
+    display: flex;
+    flex-direction: row;
+    
+}
+.quantity , .quantityHead , .percentageHead, .ingredientPercentage{
+    flex-grow:1;
+    flex:1;
+}
+.ingredientName ,.nameHead , .percentageHead {
+    flex-grow:1;
+    flex:4
+
+}
+.ingredientName::first-letter , .percentageHead::first-letter {
+    text-transform:capitalize;
+}
+.ingredientName  {
+    text-align:left;
+}
+
+.ingredients {
+    padding-top:3vh;
+    padding-bottom:3vh;
+}

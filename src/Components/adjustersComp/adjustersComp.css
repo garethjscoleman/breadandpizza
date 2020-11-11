@@ -4,7 +4,29 @@ h1 {
     margin: 2px;
   }
   
+  .warm {
+    color:red;
+  }
+
+  .middle {
+    color: green;
+  }
+
+ 
+  .cold {
+    color:blue;
+  }
   h2 {
     font-size: 1.5em;
      margin: 2px;
+  }
+  div.adjusters {
+    width:90%;
+    display:flex;
+    flex-direction: row;
+
+  }
+  div.adjusters div {
+    flex-grow:1;
+
   }

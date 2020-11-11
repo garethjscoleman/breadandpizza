@@ -6,6 +6,14 @@ div.bucketcontainer{
     width: 50%;
         
     border-bottom: 3px darkblue solid;
+/*    border-bottom-left-radius:15px;
+    border-bottom-right-radius:15px;
+*/
+}
+
+.bucketcontainer:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 div.flour {

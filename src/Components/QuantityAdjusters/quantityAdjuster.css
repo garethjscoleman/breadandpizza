@@ -1,0 +1,27 @@
+@media (min-width:400px)
+{
+  .modal-body
+  {
+    padding-left:64px;
+    padding-right:64px;
+  }
+  
+
+}
+
+@media (min-width:800px)
+{
+  .modal-body
+  {
+    padding-left:8vw;
+    padding-right:8vw;
+  }
+  
+
+}
+
+
+.modal-90w {
+    width:90vw;
+  }
+  

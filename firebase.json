@@ -7,10 +7,22 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+       {
+        // Returns a temporary redirect for all requests to files or directories in the "firebase" directory
+        "source": "/firebase/**",
+        "destination": "https://firebase.google.com/",
+        "type": 302
+      },
       {
+        "source":"**/__/firebase/6.0.2/firebase-app.js",
+        "destination": "https://firebase.google.com/__/firebase/6.0.2/firebase-app.js",
+        "type":302
+      }       
+      ,{
         "source": "**",
         "destination": "/index.html"
       }
+
     ]
   }
 }

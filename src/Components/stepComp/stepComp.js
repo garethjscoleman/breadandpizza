@@ -1,22 +1,18 @@
- import React, { Component } from 'react';
+ import React from 'react';
 
- import './descriptionComp.css';
- 
- class DescriptionComp extends React.Component {
-   constructor(props) {
-     super(props)    
-     
-   }
+ import './stepComp.css';
+
+ class StepComp extends React.Component {
    
    render() {
      return (
        <div>
-       <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      
+       <h2>{this.props.steptitle}</h2>
+        {this.props.stepdetail}
+        <br/><br/>{this.props.temp ===0 ? <span></span>:<span>Temperature {this.props.temp} &deg;C</span>}
        </div>
      )
    }
   }
  
-  export default DescriptionComp;
+  export default StepComp;

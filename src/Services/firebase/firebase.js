@@ -1,7 +1,6 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import React, { Component } from 'react';
+import React from 'react';
 import firebase from 'firebase';
-import ReactDOM from 'react-dom';
 
 // Styles
 import styles from './firebase.css'; // This uses CSS modules.
@@ -70,7 +69,7 @@ class SignInScreen extends React.Component {
         {this.state.isSignedIn &&
           <div className={styles.signedIn}>
             Hello {firebaseApp.auth().currentUser.displayName}. You are now signed In!
-            <a className={styles.button} onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
+            <div  className={styles.button} onClick={() => firebaseApp.auth().signOut()}>Sign-out</div>
           </div>
         }
 
