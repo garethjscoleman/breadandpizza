@@ -166,16 +166,16 @@ class QuantityAdjusters extends React.Component {
         }
              <ControlLabel>How much hydration &#63;</ControlLabel>
              <InputRange 
-                formatLabel={value => {if(value<3){return 'Low';}if(value>4){return 'High';}return 'Medium'; }}
+                formatLabel={value => {if(value<4){return 'Low';}if(value>7){return 'High';}return 'Medium'; }}
                 formatMinLabel={' Low Hydration'}
                 formatMaxLabel={' High Hydration'}
                 step={1}
-                maxValue={5}
+                maxValue={9}
                 minValue={1}
                 value={this.props.hydration}
                 onChange={this.props.handleChangeHydration} 
            />
-           <HelpBlock>This has to be a number between 1 and 3.</HelpBlock>
+           <HelpBlock>This adjusts between -10 and plus 10 percent.</HelpBlock>
         </div>
         </Modal.Body>
 

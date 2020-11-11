@@ -19,7 +19,7 @@ class IngredientList extends React.Component {
 
    componentDidUpdate(prevprops) {
     try {
-      if (this.props.recipeid !== prevprops.recipeid || this.props.totalMass !== prevprops.totalMass || this.props.starterMass !== prevprops.starterMass )
+      if (this.props.recipeid !== prevprops.recipeid || this.props.totalMass !== prevprops.totalMass || this.props.starterMass !== prevprops.starterMass || this.props.hydrationadjust !== prevprops.hydrationadjust )
       {
         var stateToSave = this.state;
         this.recipelist = getrecipelist();

@@ -231,7 +231,7 @@ class QuantitiesAndTimes extends React.Component {
           doughProps.flourType= this.recipe.flourcomponents[0].flourTypeName;
           doughProps.recipe = foundrecipe;
           doughProps.hydrationpercent = doughProps.recipe.basehydration; 
-          doughProps.hydrationadjust = (doughProps.hydration-3)*5;
+          doughProps.hydrationadjust = (doughProps.hydration-5)*2.5;
           doughProps.recipe = validateRecipe(doughProps.recipe, doughProps.doughmass,doughProps.startermass, doughProps.hydrationpercent + doughProps.hydrationadjust, doughProps.raisingagenttype );
 
 
@@ -308,21 +308,21 @@ class QuantitiesAndTimes extends React.Component {
 
     updateHydrationRate = function(doughProps) {
       try {
-        switch (doughProps.recipe.Title) 
+        switch (doughProps.recipe.title) 
         {
           case 'Pizza':
           doughProps.flourType = 'Type00Pasta';
-          doughProps.hydrationpercent = 68;
-          doughProps.hydrationadjust =0;
+          doughProps.hydrationpercent = doughProps.recipe.basehydration; 
+          doughProps.hydrationadjust = (doughProps.hydration-5)*2.5;
             break;
           case 'baguette':
           doughProps.flourType = 'FrenchT65_mixed_with_DovesWhiteBread';
           doughProps.hydrationpercent = 72; 
-          doughProps.hydrationadjust = (doughProps.hydration-3)*5;
+          doughProps.hydrationadjust = (doughProps.hydration-5)*2.5;
             break;
           default:
           doughProps.hydrationpercent = doughProps.recipe.basehydration; 
-          doughProps.hydrationadjust = (doughProps.hydration-3)*5;
+          doughProps.hydrationadjust = (doughProps.hydration-5)*2.55;
         }
         doughProps.recipe = validateRecipe(doughProps.recipe, doughProps.doughmass,doughProps.startermass, doughProps.hydrationpercent + doughProps.hydrationadjust, doughProps.raisingagenttype );
       }
@@ -821,10 +821,10 @@ class QuantitiesAndTimes extends React.Component {
               id="controlled-tab-example"
               >
               <Tab eventKey={1} title="Instructions"  >
-                <StepsContainerComp recipeid={(this.state.recipeid)} totalMass={(this.state.doughmass)} starterMass={(this.state.startermass)} />
+                <StepsContainerComp recipeid={(this.state.recipeid)} totalMass={(this.state.doughmass)} starterMass={(this.state.startermass)} hydrationadjust={(this.state.hydrationadjust)} />
               </Tab>
               <Tab eventKey={2} title="Ingredients">
-                <IngredientsList recipeid={(this.state.recipeid)}  totalMass={(this.state.doughmass)} starterMass={(this.state.startermass)}  />
+                <IngredientsList recipeid={(this.state.recipeid)}  totalMass={(this.state.doughmass)} starterMass={(this.state.startermass)} hydrationadjust={(this.state.hydrationadjust)}   />
               </Tab>
             </Tabs>
             <DisplayQuantitiesTimesTab 
