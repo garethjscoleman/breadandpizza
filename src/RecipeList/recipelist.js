@@ -171,7 +171,7 @@ export function getrecipelist() {
   description:'Pizza dough is best prepared a day or two before you need it, and then left to prove in the fridge',
   imagedescription:'Pizza Margherita',
   imageUrl:'/pizza.jpg',
-  basehydration:65,
+  basehydration:63,
   flourcomponents:[{id:0,ratio:80, flourType:0,flourTypeName:'00 Pasta Flour - about 14% protein'},{id:8,ratio:20, flourType:0,flourTypeName:'White Bread Flour'}],
   watercomponents:[{id:1,ratio:74},{id:9,ratio:16},{id:10,ratio:10}],
   autolysecomponents:[{id:0},{id:1}],
