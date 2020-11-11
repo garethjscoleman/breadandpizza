@@ -169,11 +169,11 @@ export function getrecipelist() {
   title:'Pizza',
   subtitle:'the best slow pizza dough',
   description:'Pizza dough is best prepared a day or two before you need it, and then left to prove in the fridge',
-  imagedescription:'this is an alt text',
+  imagedescription:'Pizza Margherita',
   imageUrl:'/pizza.jpg',
   basehydration:65,
   flourcomponents:[{id:0,ratio:80, flourType:0,flourTypeName:'00 Pasta Flour - about 14% protein'},{id:8,ratio:20, flourType:0,flourTypeName:'White Bread Flour'}],
-  watercomponents:[{id:1,ratio:70},{id:9,ratio:20},{id:10,ratio:10}],
+  watercomponents:[{id:1,ratio:74},{id:9,ratio:16},{id:10,ratio:10}],
   autolysecomponents:[{id:0},{id:1}],
   leavencomponents:[{id:2,ratio:100,hydration:65}],
   ingredients: [
@@ -185,9 +185,9 @@ export function getrecipelist() {
       id: 0,
     },
     {
-      ratio:56,
+      ratio:52,
       name: 'water',
-      quantity: 50,
+      quantity: 52,
       unit: 'g',
       id: 1
     },
@@ -241,9 +241,9 @@ export function getrecipelist() {
       id: 8,
     },
     {
-      ratio:10,
+      ratio:8,
       name: 'water for leaven mix',
-      quantity: 10,
+      quantity: 8,
       unit: 'g',
       id: 9,
     },
