@@ -12,7 +12,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'CI=true npm test-ci'
+        sh 'CI=true npm run test-ci'
       }
     }
 
