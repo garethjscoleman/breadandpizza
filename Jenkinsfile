@@ -13,6 +13,7 @@ pipeline {
       steps {
         echo 'Testing'
         sh 'CI=true npm run test-ci'
+        echo 'Finished Testing'
       }
     }
 
