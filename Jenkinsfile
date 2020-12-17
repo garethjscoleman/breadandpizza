@@ -12,7 +12,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'CI=true npm test --update-snapshots'
+        sh 'CI=true npm test-ci'
       }
     }
 
